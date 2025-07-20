@@ -63,50 +63,47 @@ function App() {
   const navbarY = useTransform(scrollYProgress, [0, 0.3], [0, -80]);
 
   // --- اسکرول سکشن به سکشن (نسخه پایدار) ---
- useEffect(() => {
-  let positions = [];
-  let ticking = false;
+  useEffect(() => {
+    let positions = [];
+    let ticking = false;
 
-  const updatePositions = () => {
-    const sections = Array.from(document.querySelectorAll("section"));
-    positions = sections.map((s) => Math.round(s.offsetTop));
-  };
+    const updatePositions = () => {
+      const sections = Array.from(document.querySelectorAll("section"));
+      positions = sections.map((s) => Math.round(s.offsetTop));
+    };
 
-  updatePositions();
-  window.addEventListener("resize", updatePositions);
+    updatePositions();
+    window.addEventListener("resize", updatePositions);
 
-  const handleScroll = (event) => {
-  event.preventDefault();
-  if (ticking) return;
-  ticking = true;
+    const handleScroll = (event) => {
+      event.preventDefault();
+      if (ticking) return;
+      ticking = true;
 
-  // اگر بالا می‌رویم، کمی currentScroll را کم می‌کنیم
-  const adjustment = event.deltaY < 0 ? -50 : 0;
-  const currentScroll = window.scrollY + 10 + adjustment;
+      // اگر بالا می‌رویم، کمی currentScroll را کم می‌کنیم
+      const adjustment = event.deltaY < 0 ? -50 : 0;
+      const currentScroll = window.scrollY + 10 + adjustment;
 
-  const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
-  const direction = event.deltaY > 0 ? 1 : -1;
+      const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
+      const direction = event.deltaY > 0 ? 1 : -1;
 
-  let targetIndex = currentIndex + direction;
-  if (targetIndex < 0) targetIndex = 0;
-  if (targetIndex >= positions.length) targetIndex = positions.length - 1;
+      let targetIndex = currentIndex + direction;
+      if (targetIndex < 0) targetIndex = 0;
+      if (targetIndex >= positions.length) targetIndex = positions.length - 1;
 
-  window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
+      window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
 
-  setTimeout(() => {
-    ticking = false;
-  }, 400);
-};
+      setTimeout(() => {
+        ticking = false;
+      }, 400);
+    };
 
-
-  window.addEventListener("wheel", handleScroll, { passive: false });
-  return () => {
-    window.removeEventListener("wheel", handleScroll);
-    window.removeEventListener("resize", updatePositions);
-  };
-}, []);
-
-
+    window.addEventListener("wheel", handleScroll, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("resize", updatePositions);
+    };
+  }, []);
 
   return (
     <div className="text-white relative">
@@ -163,9 +160,21 @@ function App() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="absolute top-16 right-4 bg-black/90 p-4 rounded-lg shadow-lg w-52 flex flex-col gap-3 md:hidden">
-            <a href="https://x.com/YieldVaults" className="text-yellow-400">Join the Club</a>
-            <a href="#roadmap" className="text-yellow-400">Roadmap</a>
-            <a href="#blog" className="text-yellow-400">Blog</a>
+            <a
+              href="https://x.com/YieldVaults"
+              className="flex items-center gap-2 text-yellow-400"
+            >
+              <img src="/X.png" alt="X Icon" className="h-5 w-5" />
+              Join the Club
+            </a>
+            <a href="#roadmap" className="flex items-center gap-2 text-yellow-400">
+              <img src="/RoadMapic.png" alt="Roadmap Icon" className="h-5 w-5" />
+              Roadmap
+            </a>
+            <a href="#blog" className="flex items-center gap-2 text-yellow-400">
+              <img src="/Blog.png" alt="Blog Icon" className="h-5 w-5" />
+              Blog
+            </a>
           </div>
         )}
       </motion.header>
@@ -174,7 +183,7 @@ function App() {
       <motion.section
         ref={heroRef}
         style={{ opacity: heroOpacity }}
-        className="h-[100svh] w-full flex flex-col justify-center items-end pt-24 pr-4 sm:pr-6 md:pr-20 text-left relative"
+        className="h-[100svh] w-full flex flex-col justify-center items-end pt-24 pr-4 sm:pr-6 md:pr-20 text-left relative hero-section"
       >
         <div
           className="absolute inset-0 z-[-1]"
@@ -185,12 +194,12 @@ function App() {
           }}
         ></div>
 
-        <div className="relative max-w-xl bg-black/60 p-6 sm:p-8 rounded-xl backdrop-blur-md leading-relaxed space-y-6">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight">
+        <div className="relative max-w-xl bg-black/60 p-6 sm:p-8 rounded-xl backdrop-blur-md leading-relaxed space-y-6 hero-content">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight hero-title">
             A professional NFT fund<br />
             with real yield on <span className="text-white">Solana</span>.
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wide">
+          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wide hero-subtitle">
             Join the future of decentralized investments<br />
             with <span className="text-white font-semibold">VaultsClub</span>.
           </p>
@@ -208,7 +217,7 @@ function App() {
       </section>
 
       {/* Tokenomics */}
-<section className="tokenomics-section min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10 px-4 sm:px-6 bg-dark max-w-6xl mx-auto">
+      <section className="tokenomics-section min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10 px-4 sm:px-6 bg-dark max-w-6xl mx-auto">
         <div className="w-full md:w-1/2 flex justify-center">
           <ReactECharts option={chartOptions} style={{ height: "280px", width: "100%" }} />
         </div>

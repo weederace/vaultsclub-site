@@ -25,7 +25,7 @@
   /* منوی موبایل */
   .mobile-menu {
     position: absolute;
-    top: 64px; /* کمی فاصله بیشتر از هدر */
+    top: 64px;
     right: 1rem;
     background: rgba(0, 0, 0, 0.9);
     padding: 1rem;
@@ -38,8 +38,19 @@
   }
 
   /* متن‌های Hero */
+  .hero-section {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
   .hero-title {
-    font-size: 1.2rem; /* کوچک‌تر برای موبایل */
+    font-size: 1.2rem;
     line-height: 1.5rem;
   }
 
