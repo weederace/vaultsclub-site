@@ -1,0 +1,53 @@
+/* تنظیمات مخصوص موبایل */
+@media (max-width: 768px) {
+  .header-container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .header-btn-alt {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    border-radius: 8px;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.4rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .tokenomics-section {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .tokenomics-list {
+    text-align: center;
+  }
+}
