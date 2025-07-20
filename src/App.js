@@ -7,45 +7,50 @@ import ShrinkCardSection from "./components/ShrinkCardSection";
 import "./index.css";
 import "./responsive.css";
 
+// --- تنظیمات نمودار توکنومیکس ---
 const chartOptions = {
-  tooltip: { trigger: "item", formatter: "{b}: {d}%" },
-  legend: {
-    orient: "vertical",
-    right: 10,
-    top: "center",
-    textStyle: { color: "#ccc", fontWeight: "bold" },
+  tooltip: {
+    trigger: "item",
+    formatter: "{b}: {d}%",
+    backgroundColor: "rgba(0, 0, 0, 0.85)",
+    textStyle: { color: "#fff", fontSize: 14 },
   },
+  legend: { show: false },
   series: [
     {
       name: "Tokenomics",
       type: "pie",
-      radius: ["50%", "75%"],
-      center: ["40%", "50%"],
+      radius: ["55%", "75%"],
+      center: ["47%", "45%"],
       avoidLabelOverlap: false,
-      itemStyle: {
-        borderRadius: 10,
-        borderColor: "#111827",
-        borderWidth: 4,
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowColor: "rgba(0, 0, 0, 0.4)",
-      },
-      label: { show: false },
-      emphasis: {
-        scale: true,
-        scaleSize: 10,
-        itemStyle: {
-          shadowBlur: 25,
-          shadowColor: "rgba(255, 255, 255, 0.3)",
+      label: {
+        show: true,
+        position: "outside",
+        fontSize: 14,
+        formatter: (params) => `{color${params.dataIndex}|${params.percent}%}`,
+        rich: {
+          color0: { color: "#FFD600" },  // زرد
+          color1: { color: "#9E6EFF" },  // بنفش
+          color2: { color: "#38BDF8" },  // آبی
+          color3: { color: "#F472B6" },  // صورتی
         },
       },
-      labelLine: { show: false },
+      labelLine: {
+        show: true,
+        length: 10,
+        length2: 10,
+        lineStyle: { color: "#aaa" },
+      },
+      itemStyle: {
+        borderRadius: 12,
+        borderColor: "#111827",
+        borderWidth: 3,
+      },
       data: [
-        { value: 50, name: "Investment in assets", itemStyle: { color: "#FFD600" } },
-        { value: 30, name: "Stable yield fund", itemStyle: { color: "#9E6EFF" } },
-        { value: 10, name: "Core team allocation", itemStyle: { color: "#38BDF8" } },
-        { value: 6, name: "Technical development", itemStyle: { color: "#64748B" } },
-        { value: 4, name: "Marketing & promotion", itemStyle: { color: "#F472B6" } },
+        { value: 40, name: "Paid to NFT holders", itemStyle: { color: "#FFD600" } },
+        { value: 40, name: "Reinvested into fund", itemStyle: { color: "#9E6EFF" } },
+        { value: 10, name: "Floor Buybacks", itemStyle: { color: "#38BDF8" } },
+        { value: 10, name: "Team, R&D & Development", itemStyle: { color: "#F472B6" } },
       ],
     },
   ],
@@ -62,7 +67,7 @@ function App() {
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const navbarY = useTransform(scrollYProgress, [0, 0.3], [0, -80]);
 
-  // --- اسکرول سکشن به سکشن (نسخه پایدار) ---
+  // --- اسکرول سکشن به سکشن ---
   useEffect(() => {
     let positions = [];
     let ticking = false;
@@ -80,7 +85,6 @@ function App() {
       if (ticking) return;
       ticking = true;
 
-      // اگر بالا می‌رویم، کمی currentScroll را کم می‌کنیم
       const adjustment = event.deltaY < 0 ? -50 : 0;
       const currentScroll = window.scrollY + 10 + adjustment;
 
@@ -109,12 +113,11 @@ function App() {
     <div className="text-white relative">
       <div className="absolute inset-0 bg-dark z-[-2]"></div>
 
-      {/* Navbar */}
+      {/* --- Navbar --- */}
       <motion.header
         style={{ y: navbarY }}
         className="fixed top-4 right-4 bg-black/60 backdrop-blur-md z-50 flex justify-between items-center px-4 md:px-6 py-3 rounded-full shadow-lg w-[60%] transition-transform duration-500"
       >
-        {/* Links - Desktop */}
         <div className="hidden md:flex gap-3">
           <a
             href="https://x.com/YieldVaults"
@@ -143,27 +146,18 @@ function App() {
             Blog
           </a>
         </div>
-
-        {/* Logo */}
         <div className="flex items-center">
           <img src="/Logo.png" alt="VaultsClub Logo" className="h-10 w-auto" />
         </div>
-
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-white text-3xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           ☰
         </button>
-
-        {/* Mobile Menu */}
         {menuOpen && (
           <div className="absolute top-16 right-4 bg-black/90 p-4 rounded-lg shadow-lg w-52 flex flex-col gap-3 md:hidden">
-            <a
-              href="https://x.com/YieldVaults"
-              className="flex items-center gap-2 text-yellow-400"
-            >
+            <a href="https://x.com/YieldVaults" className="flex items-center gap-2 text-yellow-400">
               <img src="/X.png" alt="X Icon" className="h-5 w-5" />
               Join the Club
             </a>
@@ -179,7 +173,7 @@ function App() {
         )}
       </motion.header>
 
-      {/* Hero */}
+      {/* --- Hero Section --- */}
       <motion.section
         ref={heroRef}
         style={{ opacity: heroOpacity }}
@@ -193,7 +187,6 @@ function App() {
             backgroundPosition: "center",
           }}
         ></div>
-
         <div className="relative max-w-xl bg-black/60 p-6 sm:p-8 rounded-xl backdrop-blur-md leading-relaxed space-y-6 hero-content">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight hero-title">
             A professional NFT fund<br />
@@ -216,18 +209,40 @@ function App() {
         <ShrinkCardSection />
       </section>
 
-      {/* Tokenomics */}
-      <section className="tokenomics-section min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10 px-4 sm:px-6 bg-dark max-w-6xl mx-auto">
-        <div className="w-full md:w-1/2 flex justify-center">
-          <ReactECharts option={chartOptions} style={{ height: "280px", width: "100%" }} />
+      {/* --- Tokenomics --- */}
+      <section className="relative min-h-screen flex items-end justify-end px-4 sm:px-6 overflow-hidden tokenomics-section">
+        {/* ویدیو بکگراند */}
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-[-2]"
+          src="/videos/tokenomics_bg.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+
+        {/* هاله مشکی پشت نمودار */}
+	<div className="absolute top-[8%] right-[5%] w-[420px] h-[360px] bg-black/70 px-4 py-4 rounded-xl shadow-lg z-0"></div>
+
+        {/* چارت */}
+        <div className="absolute top-[9%] right-[6.3%] w-[380px] h-[380px] z-10">
+          <ReactECharts option={chartOptions} style={{ height: "100%", width: "100%" }} />
         </div>
-        <ul className="tokenomics-list text-center md:text-left text-gray-300 text-sm sm:text-base space-y-2 sm:space-y-3 w-full md:w-1/2">
-          <li><span className="text-yellow-400 font-semibold">50%</span> - Investment in assets</li>
-          <li><span className="text-purple-400 font-semibold">30%</span> - Stable fund for regular yield payouts</li>
-          <li><span className="text-sky-400 font-semibold">10%</span> - Core team allocation</li>
-          <li><span className="text-gray-400 font-semibold">6%</span> - Technical development</li>
-          <li><span className="text-pink-400 font-semibold">4%</span> - Marketing & promotion</li>
-        </ul>
+
+        {/* متن درصدها */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute bottom-[30%] right-[5%] text-lg sm:text-xl font-semibold bg-black/80 px-6 py-4 rounded-xl shadow-lg z-10 w-[420px] leading-relaxed"
+        >
+          <ul className="space-y-3">
+            <li><span className="text-yellow-400">40%</span> - Paid to NFT holders</li>
+            <li><span className="text-purple-400">40%</span> - Reinvested into fund</li>
+            <li><span className="text-sky-400">10%</span> - Floor Buybacks</li>
+            <li><span className="text-pink-400">10%</span> - Team, R&D & Development</li>
+          </ul>
+        </motion.div>
       </section>
 
       {/* Highlights */}

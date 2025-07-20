@@ -1,28 +1,30 @@
+/* تنظیمات عمومی فونت */
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 /* تنظیمات ویژه موبایل */
 @media (max-width: 768px) {
-  /* هدر (Navbar) */
-  .header-container {
+  /* --- Navbar --- */
+  .header-container,
+  .fixed {
+    width: 90% !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 12px !important;
     background: rgba(0, 0, 0, 0.7);
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
-  /* دکمه‌های هدر */
   .header-btn,
   .header-btn-alt {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.9rem;
-    border-radius: 8px;
+    font-size: 0.8rem !important;
+    padding: 0.4rem 0.9rem !important;
+    border-radius: 8px !important;
   }
 
   .header-btn-alt {
-    background-color: #333;
+    background-color: #333 !important;
   }
 
-  /* منوی موبایل */
   .mobile-menu {
     position: absolute;
     top: 64px;
@@ -37,37 +39,67 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   }
 
-  /* متن‌های Hero */
+  /* --- Hero Section --- */
   .hero-section {
     padding-right: 1rem !important;
     padding-left: 1rem !important;
-    text-align: center;
+    text-align: center !important;
   }
 
   .hero-content {
     max-width: 90%;
-    margin: 0 auto;
+    margin: 0 auto !important;
   }
 
   .hero-title {
-    font-size: 1.2rem;
-    line-height: 1.5rem;
+    font-size: 1.2rem !important;
+    line-height: 1.5rem !important;
   }
 
   .hero-subtitle {
-    font-size: 0.85rem;
-    line-height: 1.3rem;
+    font-size: 0.85rem !important;
+    line-height: 1.3rem !important;
   }
 
-  /* Tokenomics */
+  /* --- Tokenomics --- */
   .tokenomics-section {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1.2rem;
+    flex-direction: column !important;
+    padding: 1rem !important;
+    gap: 1rem !important;
+    text-align: center;
+  }
+
+  .tokenomics-section video {
+    object-fit: cover;
   }
 
   .tokenomics-list {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.9rem !important;
+    padding: 1rem;
+  }
+
+  .tokenomics-section .absolute {
+    position: static !important;
+    margin: 0 auto;
+  }
+
+  /* --- Membership --- */
+  .membership-section {
+    padding: 1rem !important;
+    text-align: center;
+  }
+
+  .membership-section h2 {
+    font-size: 1.4rem !important;
+  }
+
+  .membership-section p {
+    font-size: 0.9rem !important;
+  }
+
+  /* --- ShrinkCard --- */
+  .shrink-card {
+    padding: 1rem !important;
   }
 }

@@ -1,22 +1,44 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 function ShrinkCardSection() {
   const ref = useRef();
+  const inView = useInView(ref, { amount: 0.8 });
+
+  // اسکرول کارت
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [3.8, 1, 0.7]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 1, 0]);
+  // کارت: Scale + حرکت + محو شدن
+  const scale = useTransform(scrollYProgress, [0, 0.5, 0.9], [2, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.9], [-40, 150]); // بالاتر شروع می‌شود
+  const opacity = useTransform(scrollYProgress, [0, 0.7, 0.9], [1, 1, 0]);
+
+  // متن‌ها: حرکت طرفین + محو
+  const textLeftX = useTransform(scrollYProgress, [0, 0.9], [0, -150]);
+  const textRightX = useTransform(scrollYProgress, [0, 0.9], [0, 150]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.7, 0.9], [1, 1, 0]);
+
+  const leftTexts = [
+    "🧠 Smart contracts ensure automated rewards.",
+    "🔒 Immutable blockchain for full transparency.",
+    "🏦 Backed by real-world assets for steady growth."
+  ];
+
+  const rightTexts = [
+    "📈 The longer you hold, the bigger your rewards.",
+    "💰 Boosted yield for loyal VaultsClub members.",
+    "🚀 Compounding returns for long-term holders."
+  ];
 
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden snap-start text-center"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden snap-start"
     >
-      {/* بک‌گراند تصویری */}
+      {/* بک‌گراند */}
       <motion.div
         className="absolute inset-0 z-0"
         style={{
@@ -28,33 +50,43 @@ function ShrinkCardSection() {
         }}
       />
 
-      {/* کارت NFT */}
-      <motion.img
-        src="/vaultsclub_card_blank.png"
-        alt="VaultsClub NFT"
-        style={{ scale, opacity }}
-        className="relative z-10 rounded-2xl shadow-2xl border border-gray-700 w-11/12 sm:w-full max-w-xs sm:max-w-sm"
-      />
+      {/* کانتینر اصلی */}
+<div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-8 md:gap-20">
+        {/* متن چپ */}
+        <motion.div
+          className="text-gray-300 text-lg md:text-xl flex-1 hidden md:flex flex-col gap-5 text-left"
+          style={{ x: textLeftX, opacity: textOpacity }}
+        >
+          {leftTexts.map((text, i) => (
+            <p key={i} className="leading-relaxed">{text}</p>
+          ))}
+        </motion.div>
 
-      {/* متن سمت چپ و راست (در دسکتاپ) */}
-      <motion.div
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm md:text-base w-1/4 hidden md:block z-10"
-        style={{ opacity }}
-      >
-        🧠 Powered by smart contracts and snapshot logic
-      </motion.div>
+        {/* کارت وسط */}
+        <motion.img
+  src="/vaultsclub_card_blank.png"
+  alt="VaultsClub NFT"
+  style={{ scale, y, opacity }}
+  className="rounded-2xl shadow-2xl border border-gray-700 w-full max-w-xs sm:max-w-md md:max-w-xl -mt-10 sm:-mt-16 md:-mt-20"
+/>
 
-      <motion.div
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm md:text-base w-1/4 text-right hidden md:block z-10"
-        style={{ opacity }}
-      >
-        📈 The longer you hold, the more you earn
-      </motion.div>
 
-      {/* متن‌ها در موبایل (زیر کارت) */}
-      <div className="md:hidden mt-6 space-y-2 text-gray-400 text-sm z-10">
-        <p>🧠 Powered by smart contracts and snapshot logic</p>
-        <p>📈 The longer you hold, the more you earn</p>
+        {/* متن راست */}
+        <motion.div
+          className="text-gray-300 text-lg md:text-xl flex-1 hidden md:flex flex-col gap-5 text-left"
+          style={{ x: textRightX, opacity: textOpacity }}
+        >
+          {rightTexts.map((text, i) => (
+            <p key={i} className="leading-relaxed">{text}</p>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* موبایل */}
+      <div className="md:hidden mt-6 space-y-4 text-gray-300 text-base z-10 text-center">
+        {leftTexts.concat(rightTexts).map((text, i) => (
+          <p key={i} className="leading-relaxed">{text}</p>
+        ))}
       </div>
     </section>
   );
