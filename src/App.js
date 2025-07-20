@@ -62,86 +62,94 @@ function App() {
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const navbarY = useTransform(scrollYProgress, [0, 0.3], [0, -80]);
 
-  useEffect(() => {
-    let ticking = false;
-    let positions = [];
+  // --- اسکرول سکشن به سکشن (نسخه پایدار) ---
+ useEffect(() => {
+  let positions = [];
+  let ticking = false;
 
-    const updatePositions = () => {
-      const sections = Array.from(document.querySelectorAll("section"));
-      positions = sections.map((s) => s.offsetTop);
-    };
+  const updatePositions = () => {
+    const sections = Array.from(document.querySelectorAll("section"));
+    positions = sections.map((s) => Math.round(s.offsetTop));
+  };
 
-    updatePositions();
-    window.addEventListener("resize", updatePositions);
+  updatePositions();
+  window.addEventListener("resize", updatePositions);
 
-    const handleScroll = (event) => {
-      event.preventDefault();
-      if (ticking) return;
-      ticking = true;
+  const handleScroll = (event) => {
+  event.preventDefault();
+  if (ticking) return;
+  ticking = true;
 
-      const currentScroll = window.scrollY + 1;
-      const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
-      const delta = event.deltaY;
-      const direction = delta > 0 ? 1 : -1;
-      let targetIndex = currentIndex;
+  // اگر بالا می‌رویم، کمی currentScroll را کم می‌کنیم
+  const adjustment = event.deltaY < 0 ? -50 : 0;
+  const currentScroll = window.scrollY + 10 + adjustment;
 
-      targetIndex = Math.min(
-        Math.max(0, currentIndex + direction),
-        positions.length - 1
-      );
+  const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
+  const direction = event.deltaY > 0 ? 1 : -1;
 
-      if (targetIndex !== currentIndex) {
-        window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
-      }
+  let targetIndex = currentIndex + direction;
+  if (targetIndex < 0) targetIndex = 0;
+  if (targetIndex >= positions.length) targetIndex = positions.length - 1;
 
-      setTimeout(() => {
-        ticking = false;
-      }, 400);
-    };
+  window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
 
-    window.addEventListener("wheel", handleScroll, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", handleScroll);
-      window.removeEventListener("resize", updatePositions);
-    };
-  }, []);
+  setTimeout(() => {
+    ticking = false;
+  }, 400);
+};
+
+
+  window.addEventListener("wheel", handleScroll, { passive: false });
+  return () => {
+    window.removeEventListener("wheel", handleScroll);
+    window.removeEventListener("resize", updatePositions);
+  };
+}, []);
+
+
 
   return (
     <div className="text-white relative">
       <div className="absolute inset-0 bg-dark z-[-2]"></div>
 
-      {/* Header */}
+      {/* Navbar */}
       <motion.header
         style={{ y: navbarY }}
-        className="fixed top-4 right-4 bg-black/60 backdrop-blur-md z-50 flex justify-between items-center px-4 md:px-6 py-3 rounded-full shadow-lg w-[60%] transition-transform duration-500 header-container"
+        className="fixed top-4 right-4 bg-black/60 backdrop-blur-md z-50 flex justify-between items-center px-4 md:px-6 py-3 rounded-full shadow-lg w-[60%] transition-transform duration-500"
       >
-        <div className="flex gap-3">
+        {/* Links - Desktop */}
+        <div className="hidden md:flex gap-3">
           <a
             href="https://x.com/YieldVaults"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-full shadow-md flex items-center gap-2 header-btn"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-full shadow-md flex items-center gap-2"
           >
             <img src="/X.png" alt="X Icon" className="h-5 w-5" />
             Join the Club
           </a>
-          <button className="bg-gray-800 text-gray-300 font-semibold py-2 px-6 rounded-full shadow-inner header-btn-alt">
+          <button className="bg-gray-800 text-gray-300 font-semibold py-2 px-6 rounded-full shadow-inner">
             📝 Apply for Whitelist
           </button>
           <a
             href="#roadmap"
-            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2 header-btn"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2"
           >
             <img src="/RoadMapic.png" alt="Roadmap Icon" className="h-5 w-5" />
             Roadmap
           </a>
           <a
             href="#blog"
-            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2 header-btn"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2"
           >
             <img src="/Blog.png" alt="Blog Icon" className="h-5 w-5" />
             Blog
           </a>
+        </div>
+
+        {/* Logo */}
+        <div className="flex items-center">
+          <img src="/Logo.png" alt="VaultsClub Logo" className="h-10 w-auto" />
         </div>
 
         {/* Mobile Menu Button */}
@@ -152,23 +160,17 @@ function App() {
           ☰
         </button>
 
-        {/* Mobile Menu Drawer */}
+        {/* Mobile Menu */}
         {menuOpen && (
-          <div className="mobile-menu">
-            <a href="https://x.com/YieldVaults" className="text-yellow-400">
-              Join the Club
-            </a>
-            <a href="#roadmap" className="text-yellow-400">
-              Roadmap
-            </a>
-            <a href="#blog" className="text-yellow-400">
-              Blog
-            </a>
+          <div className="absolute top-16 right-4 bg-black/90 p-4 rounded-lg shadow-lg w-52 flex flex-col gap-3 md:hidden">
+            <a href="https://x.com/YieldVaults" className="text-yellow-400">Join the Club</a>
+            <a href="#roadmap" className="text-yellow-400">Roadmap</a>
+            <a href="#blog" className="text-yellow-400">Blog</a>
           </div>
         )}
       </motion.header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <motion.section
         ref={heroRef}
         style={{ opacity: heroOpacity }}
@@ -184,11 +186,11 @@ function App() {
         ></div>
 
         <div className="relative max-w-xl bg-black/60 p-6 sm:p-8 rounded-xl backdrop-blur-md leading-relaxed space-y-6">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight hero-title">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight">
             A professional NFT fund<br />
             with real yield on <span className="text-white">Solana</span>.
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wide hero-subtitle">
+          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wide">
             Join the future of decentralized investments<br />
             with <span className="text-white font-semibold">VaultsClub</span>.
           </p>
@@ -196,17 +198,17 @@ function App() {
       </motion.section>
 
       {/* Membership */}
-      <section id="membership" className="bg-dark">
+      <section id="membership" className="min-h-screen">
         <MembershipSection />
       </section>
 
       {/* Shrink Card */}
-      <section id="shrink-card">
+      <section id="shrink-card" className="min-h-screen">
         <ShrinkCardSection />
       </section>
 
       {/* Tokenomics */}
-      <section className="tokenomics-section flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10 px-4 sm:px-6 bg-dark max-w-6xl mx-auto">
+<section className="tokenomics-section min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10 px-4 sm:px-6 bg-dark max-w-6xl mx-auto">
         <div className="w-full md:w-1/2 flex justify-center">
           <ReactECharts option={chartOptions} style={{ height: "280px", width: "100%" }} />
         </div>
