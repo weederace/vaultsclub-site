@@ -1,7 +1,26 @@
-.App {
-  text-align: center;
+/* ریست کلی مرورگر */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* تنظیم ارتفاع کامل برای html و body */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #000; /* اختیاری برای بک‌گراند تیره */
+}
+
+.App {
+  text-align: center;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* لوگوی چرخشی */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,9 +32,10 @@
   }
 }
 
+/* هدر تمام‌صفحه بدون فضای خالی */
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  flex: 1; /* این باعث میشه فضای باقیمانده رو بگیره */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,6 +48,7 @@
   color: #61dafb;
 }
 
+/* انیمیشن لوگو */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +57,9 @@
     transform: rotate(360deg);
   }
 }
+
+html, body {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
