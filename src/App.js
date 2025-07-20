@@ -5,7 +5,7 @@ import Roadmap from "./components/Roadmap";
 import MembershipSection from "./components/MembershipSection";
 import ShrinkCardSection from "./components/ShrinkCardSection";
 import "./index.css";
-import "./responsive.css"; 
+import "./responsive.css";
 
 const chartOptions = {
   tooltip: { trigger: "item", formatter: "{b}: {d}%" },
@@ -112,41 +112,61 @@ function App() {
 
       {/* Header */}
       <motion.header
-  style={{ y: navbarY }}
-  className="fixed top-4 right-4 bg-black/60 backdrop-blur-md z-50 flex justify-between items-center px-6 py-3 rounded-full shadow-lg w-[60%] md:w-[50%] transition-transform duration-500"
->
-  <div className="flex gap-3">
-    <a
-      href="https://x.com/YieldVaults"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-full shadow-md flex items-center gap-2"
-    >
-      <img src="/X.png" alt="X Icon" className="h-5 w-5" />
-      Join the Club
-    </a>
-    <button className="bg-gray-800 text-gray-300 font-semibold py-2 px-6 rounded-full shadow-inner">
-      📝 Apply for Whitelist
-    </button>
-    <a
-      href="#roadmap"
-      className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2"
-    >
-      <img src="/RoadMapic.png" alt="Roadmap Icon" className="h-5 w-5" />
-      Roadmap
-    </a>
-    <a
-      href="#blog"
-      className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2"
-    >
-      <img src="/Blog.png" alt="Blog Icon" className="h-5 w-5" />
-      Blog
-    </a>
-  </div>
-  <div className="flex items-center" style={{ marginRight: "12px" }}>
-    <img src="/Logo.png" alt="VaultsClub Logo" className="h-12 w-auto" />
-  </div>
-</motion.header>
+        style={{ y: navbarY }}
+        className="fixed top-4 right-4 bg-black/60 backdrop-blur-md z-50 flex justify-between items-center px-4 md:px-6 py-3 rounded-full shadow-lg w-[60%] transition-transform duration-500 header-container"
+      >
+        <div className="flex gap-3">
+          <a
+            href="https://x.com/YieldVaults"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-full shadow-md flex items-center gap-2 header-btn"
+          >
+            <img src="/X.png" alt="X Icon" className="h-5 w-5" />
+            Join the Club
+          </a>
+          <button className="bg-gray-800 text-gray-300 font-semibold py-2 px-6 rounded-full shadow-inner header-btn-alt">
+            📝 Apply for Whitelist
+          </button>
+          <a
+            href="#roadmap"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2 header-btn"
+          >
+            <img src="/RoadMapic.png" alt="Roadmap Icon" className="h-5 w-5" />
+            Roadmap
+          </a>
+          <a
+            href="#blog"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded-full flex items-center gap-2 header-btn"
+          >
+            <img src="/Blog.png" alt="Blog Icon" className="h-5 w-5" />
+            Blog
+          </a>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white text-3xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        {/* Mobile Menu Drawer */}
+        {menuOpen && (
+          <div className="mobile-menu">
+            <a href="https://x.com/YieldVaults" className="text-yellow-400">
+              Join the Club
+            </a>
+            <a href="#roadmap" className="text-yellow-400">
+              Roadmap
+            </a>
+            <a href="#blog" className="text-yellow-400">
+              Blog
+            </a>
+          </div>
+        )}
+      </motion.header>
 
       {/* Hero Section */}
       <motion.section
@@ -164,11 +184,11 @@ function App() {
         ></div>
 
         <div className="relative max-w-xl bg-black/60 p-6 sm:p-8 rounded-xl backdrop-blur-md leading-relaxed space-y-6">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-400 leading-snug tracking-tight hero-title">
             A professional NFT fund<br />
             with real yield on <span className="text-white">Solana</span>.
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wide">
+          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wide hero-subtitle">
             Join the future of decentralized investments<br />
             with <span className="text-white font-semibold">VaultsClub</span>.
           </p>

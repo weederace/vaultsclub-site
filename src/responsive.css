@@ -1,53 +1,62 @@
-/* تنظیمات مخصوص موبایل */
+/* تنظیمات ویژه موبایل */
 @media (max-width: 768px) {
+  /* هدر (Navbar) */
   .header-container {
     background: rgba(0, 0, 0, 0.7);
-    padding: 0.6rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .header-btn {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-  }
-
+  /* دکمه‌های هدر */
+  .header-btn,
   .header-btn-alt {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    background-color: #333;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 8px;
   }
 
+  .header-btn-alt {
+    background-color: #333;
+  }
+
+  /* منوی موبایل */
   .mobile-menu {
     position: absolute;
-    top: 60px;
+    top: 64px; /* کمی فاصله بیشتر از هدر */
     right: 1rem;
     background: rgba(0, 0, 0, 0.9);
     padding: 1rem;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    width: 12rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   }
 
+  /* متن‌های Hero */
   .hero-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem; /* کوچک‌تر برای موبایل */
+    line-height: 1.5rem;
   }
 
   .hero-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.3rem;
   }
 
+  /* Tokenomics */
   .tokenomics-section {
     flex-direction: column;
     padding: 1rem;
-    gap: 1.5rem;
+    gap: 1.2rem;
   }
 
   .tokenomics-list {
     text-align: center;
+    font-size: 0.9rem;
   }
 }
