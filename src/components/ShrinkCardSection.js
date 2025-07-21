@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 function ShrinkCardSection() {
   const ref = useRef();
-  const inView = useInView(ref, { amount: 0.8 });
 
   // اسکرول کارت
   const { scrollYProgress } = useScroll({
@@ -51,7 +50,7 @@ function ShrinkCardSection() {
       />
 
       {/* کانتینر اصلی */}
-<div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-8 md:gap-20">
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-8 md:gap-20">
         {/* متن چپ */}
         <motion.div
           className="text-gray-300 text-lg md:text-xl flex-1 hidden md:flex flex-col gap-5 text-left"
@@ -64,12 +63,11 @@ function ShrinkCardSection() {
 
         {/* کارت وسط */}
         <motion.img
-  src="/vaultsclub_card_blank.png"
-  alt="VaultsClub NFT"
-  style={{ scale, y, opacity }}
-  className="rounded-2xl shadow-2xl border border-gray-700 w-full max-w-xs sm:max-w-md md:max-w-xl -mt-10 sm:-mt-16 md:-mt-20"
-/>
-
+          src="/vaultsclub_card_blank.png"
+          alt="VaultsClub NFT"
+          style={{ scale, y, opacity }}
+          className="rounded-2xl shadow-2xl border border-gray-700 w-full max-w-xs sm:max-w-md md:max-w-xl -mt-10 sm:-mt-16 md:-mt-20"
+        />
 
         {/* متن راست */}
         <motion.div

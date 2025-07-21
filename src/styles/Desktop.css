@@ -1,0 +1,5 @@
+/* desktop.css */
+body {
+background-image: url('../assets/images/desktop_bg.png');
+background-size: cover;
+}
