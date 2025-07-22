@@ -81,26 +81,33 @@ function App() {
     window.addEventListener("resize", updatePositions);
 
     const handleScroll = (event) => {
-      event.preventDefault();
-      if (ticking) return;
-      ticking = true;
+  event.preventDefault();
+  if (ticking) return;
+  ticking = true;
 
-      const adjustment = event.deltaY < 0 ? -50 : 0;
-      const currentScroll = window.scrollY + 10 + adjustment;
+  const scrollThreshold = 40; // اگر اسکرول کمتر از 40px بود، حرکت نکند
+  if (Math.abs(event.deltaY) < scrollThreshold) {
+    ticking = false;
+    return;
+  }
 
-      const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
-      const direction = event.deltaY > 0 ? 1 : -1;
+  const adjustment = event.deltaY < 0 ? -20 : 0; // پرش کمتر
+  const currentScroll = window.scrollY + 10 + adjustment;
 
-      let targetIndex = currentIndex + direction;
-      if (targetIndex < 0) targetIndex = 0;
-      if (targetIndex >= positions.length) targetIndex = positions.length - 1;
+  const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
+  const direction = event.deltaY > 0 ? 1 : -1;
 
-      window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
+  let targetIndex = currentIndex + direction;
+  if (targetIndex < 0) targetIndex = 0;
+  if (targetIndex >= positions.length) targetIndex = positions.length - 1;
 
-      setTimeout(() => {
-        ticking = false;
-      }, 400);
-    };
+  window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
+
+  setTimeout(() => {
+    ticking = false;
+  }, 600); // کمی بیشتر تا اسکرول دوم اتفاق نیفته
+};
+
 
     window.addEventListener("wheel", handleScroll, { passive: false });
     return () => {

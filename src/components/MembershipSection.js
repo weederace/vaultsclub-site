@@ -45,31 +45,53 @@ const benefits = [
 
 export default function MembershipSection() {
   return (
-    <section
-      className="relative w-full text-white min-h-screen snap-start"
-      style={{
-        backgroundImage: `url('/benefits/bg.png')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
+    <section className="relative w-full text-white py-12 sm:py-16 overflow-hidden">
+      {/* بک‌گراند موبایل */}
+      <div
+        className="absolute inset-0 bg-cover bg-center sm:hidden"
+        style={{ backgroundImage: `url('/benefits/bg_mobile.png')` }}
+      ></div>
+
+      {/* بک‌گراند دسکتاپ */}
+      <div
+        className="absolute inset-0 bg-cover bg-center hidden sm:block"
+        style={{ backgroundImage: `url('/benefits/bg.png')` }}
+      ></div>
+
       {/* لایه نیمه‌شفاف مشکی */}
       <div className="absolute inset-0 bg-black/60 z-0"></div>
 
       {/* محتوا */}
-      <div className="relative z-10 px-4 sm:px-6 py-16 sm:py-24">
-
-        <div className="max-w-7xl mx-auto text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-400">
+      <div className="relative z-10 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto text-center mb-10 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-yellow-400">
             Membership Benefits
           </h2>
-          <p className="text-gray-400 text-base sm:text-lg">
+          <p className="text-gray-400 text-sm sm:text-base">
             What makes VaultsClub truly unique for long-term holders.
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10">
+        {/* موبایل: ۲ ستون × ۴ کارت */}
+        <div className="grid grid-cols-2 gap-4 sm:hidden max-w-md mx-auto">
+          {benefits.map((benefit, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center text-center bg-black/40 rounded-xl p-4 shadow-lg"
+            >
+              <img
+                src={benefit.image}
+                alt={benefit.title}
+                className="h-16 mb-3"
+              />
+              <h3 className="text-sm font-semibold mb-1">{benefit.title}</h3>
+              <p className="text-gray-300 text-xs">{benefit.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* دسکتاپ: طراحی اصلی ۴ ستون */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 max-w-7xl mx-auto">
           {benefits.map((benefit, index) => (
             <div
               key={index}

@@ -4,18 +4,15 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 function ShrinkCardSection() {
   const ref = useRef();
 
-  // اسکرول کارت
+  // انیمیشن دسکتاپ
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
 
-  // کارت: Scale + حرکت + محو شدن
   const scale = useTransform(scrollYProgress, [0, 0.5, 0.9], [2, 1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.9], [-40, 150]); // بالاتر شروع می‌شود
+  const y = useTransform(scrollYProgress, [0, 0.9], [-40, 150]);
   const opacity = useTransform(scrollYProgress, [0, 0.7, 0.9], [1, 1, 0]);
-
-  // متن‌ها: حرکت طرفین + محو
   const textLeftX = useTransform(scrollYProgress, [0, 0.9], [0, -150]);
   const textRightX = useTransform(scrollYProgress, [0, 0.9], [0, 150]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.7, 0.9], [1, 1, 0]);
@@ -37,20 +34,20 @@ function ShrinkCardSection() {
       ref={ref}
       className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden snap-start"
     >
-      {/* بک‌گراند */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url('/shrinkcard/bg.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 1,
-        }}
-      />
+      {/* بک‌گراند موبایل */}
+      <div
+        className="absolute inset-0 bg-cover bg-center sm:hidden"
+        style={{ backgroundImage: `url('/shrinkcard/bg_mobile.png')` }}
+      ></div>
 
-      {/* کانتینر اصلی */}
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-8 md:gap-20">
+      {/* بک‌گراند دسکتاپ */}
+      <motion.div
+        className="absolute inset-0 bg-cover bg-center hidden sm:block"
+        style={{ backgroundImage: `url('/shrinkcard/bg.png')` }}
+      ></motion.div>
+
+      {/* دسکتاپ */}
+      <div className="hidden md:flex relative z-10 flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-8 md:gap-20">
         {/* متن چپ */}
         <motion.div
           className="text-gray-300 text-lg md:text-xl flex-1 hidden md:flex flex-col gap-5 text-left"
@@ -81,10 +78,27 @@ function ShrinkCardSection() {
       </div>
 
       {/* موبایل */}
-      <div className="md:hidden mt-6 space-y-4 text-gray-300 text-base z-10 text-center">
-        {leftTexts.concat(rightTexts).map((text, i) => (
-          <p key={i} className="leading-relaxed">{text}</p>
-        ))}
+      <div className="md:hidden relative z-10 w-full max-w-sm text-center">
+        {/* ۳ متن بالا */}
+        <div className="space-y-3 text-gray-300 text-base mb-6">
+          {leftTexts.map((text, i) => (
+            <p key={i} className="leading-relaxed">{text}</p>
+          ))}
+        </div>
+
+        {/* کارت وسط */}
+        <img
+          src="/vaultsclub_card_blank.png"
+          alt="VaultsClub NFT"
+          className="rounded-2xl shadow-2xl border border-gray-700 w-4/5 mx-auto mb-6"
+        />
+
+        {/* ۳ متن پایین */}
+        <div className="space-y-3 text-gray-300 text-base">
+          {rightTexts.map((text, i) => (
+            <p key={i} className="leading-relaxed">{text}</p>
+          ))}
+        </div>
       </div>
     </section>
   );
