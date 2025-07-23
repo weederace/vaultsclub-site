@@ -72,48 +72,61 @@ const steps = [
 export default function Roadmap() {
   return (
     <section
-      className="relative w-full flex justify-center items-center aspect-[16/9]"
+      className="relative w-screen flex justify-center items-center aspect-[16/9]"
       style={{
-        backgroundColor: "#003366", // رنگ نزدیک به بک‌گراند
+        backgroundColor: "#003366",
         backgroundImage: "url('/images/roadmap_bg.png')",
-        backgroundSize: "cover", // پر کردن کل بخش
+        backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* محتوای تایم‌لاین */}
-      <div className="w-full max-w-5xl mx-auto relative z-10">
-        {/* خط عمودی تایم‌لاین */}
-{/* <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-500 transform -translate-x-1/2"></div> */}
-
+      <div className="w-full max-w-6xl mx-auto relative z-10">
         {steps.map((step, index) => (
           <div
             key={index}
             className={`relative flex items-center gap-6 mb-12 ${
-              index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+              index % 2 === 0 ? "justify-start" : "justify-end"
             }`}
           >
-            {/* دایره شماره */}
-            <div
-              className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg ${step.color}`}
-            >
-              {step.number}
-            </div>
-
-            {/* کارت متن */}
-            <div className="bg-white/30 backdrop-blur-md shadow-lg rounded-xl px-6 py-5 flex-1 flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-bold text-gray-800">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 text-sm mt-1">{step.desc}</p>
-              </div>
-              <div className="ml-4 text-2xl text-gray-500">{step.icon}</div>
-            </div>
+            {index % 2 === 0 ? (
+              <>
+                <div
+                  className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg ${step.color}`}
+                >
+                  {step.number}
+                </div>
+                <div className="bg-white/30 backdrop-blur-md shadow-lg rounded-xl px-6 py-5 w-1/2 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-1">{step.desc}</p>
+                  </div>
+                  <div className="ml-4 text-2xl text-gray-500">{step.icon}</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="bg-white/30 backdrop-blur-md shadow-lg rounded-xl px-6 py-5 w-1/2 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-1">{step.desc}</p>
+                  </div>
+                  <div className="ml-4 text-2xl text-gray-500">{step.icon}</div>
+                </div>
+                <div
+                  className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg ${step.color}`}
+                >
+                  {step.number}
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>
     </section>
   );
 }
-

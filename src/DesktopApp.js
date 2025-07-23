@@ -251,7 +251,7 @@ function App() {
       </section>
 
       {/* Blog */}
-      <section id="blog" className="blog-section min-h-screen flex justify-center items-center bg-dark px-6 m-0">
+      <section id="blog" className="blog-section min-h-screen flex justify-center items-center bg-dark px-0 m-0">
         <h2 className="text-4xl font-bold text-yellow-400">Blog Coming Soon...</h2>
       </section>
     </div>
