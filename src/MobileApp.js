@@ -79,18 +79,17 @@ function MobileApp() {
         )}
       </AnimatePresence>
 
-      {/* --- Scroll Container --- */}
-      <div className="scroll-container">
-        {/* --- Hero Section --- */}
-        <section
-          className="scroll-section flex flex-col items-center px-4 text-center relative"
-          style={{
-            backgroundImage: `url('/images/first_bg.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            paddingTop: "20vh",
-          }}
-        >
+      {/* --- Hero Section --- */}
+      <section
+        className="flex flex-col items-center justify-center px-4 text-center relative h-screen"
+        style={{
+          backgroundImage: `url('/images/first_bg.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="bg-black/50 absolute inset-0"></div>
+        <div className="relative z-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-yellow-400">
             Professional NFT Fund
           </h1>
@@ -100,38 +99,38 @@ function MobileApp() {
           <button className="mt-6 bg-yellow-400 text-black px-6 py-2 rounded-full">
             Join the Club
           </button>
-        </section>
+        </div>
+      </section>
 
-        {/* --- Membership Section --- */}
-        <section id="membership" className="scroll-section p-4">
-          <MembershipSection />
-        </section>
+      {/* --- Membership Section --- */}
+      <section id="membership" className="py-12 sm:py-16">
+        <MembershipSection />
+      </section>
 
-        {/* --- Shrink Card Section --- */}
-        <section id="shrink-card" className="scroll-section p-4">
-          <ShrinkCardSection />
-        </section>
+      {/* --- Shrink Card Section --- */}
+      <section id="shrink-card" className="py-12 sm:py-16">
+        <ShrinkCardSection />
+      </section>
 
-        {/* --- Roadmap Section --- */}
-        <section id="roadmap" className="scroll-section p-4">
-          <Roadmap />
-        </section>
+      {/* --- Roadmap Section --- */}
+      <section id="roadmap" className="py-12 sm:py-16">
+        <Roadmap />
+      </section>
 
-        {/* --- Blog Section --- */}
-        <section id="blog" className="scroll-section p-6 text-center">
-          <h2 className="text-yellow-400 text-2xl font-bold mb-4">
-            Blog Coming Soon...
-          </h2>
-          <p className="text-gray-400 text-base">
-            We’re working on launching our blog with valuable updates and insights.
-          </p>
-        </section>
+      {/* --- Blog Section --- */}
+      <section id="blog" className="py-16 text-center">
+        <h2 className="text-yellow-400 text-2xl font-bold mb-4">
+          Blog Coming Soon...
+        </h2>
+        <p className="text-gray-400 text-base">
+          We’re working on launching our blog with valuable updates and insights.
+        </p>
+      </section>
 
-        {/* --- Footer --- */}
-        <section className="scroll-section text-center text-gray-500 p-4 text-sm border-t border-gray-700 flex items-center justify-center">
-          © 2025 VaultsClub | All rights reserved.
-        </section>
-      </div>
+      {/* --- Footer --- */}
+      <footer className="text-center text-gray-500 p-4 text-sm border-t border-gray-700">
+        © 2025 VaultsClub | All rights reserved.
+      </footer>
     </div>
   );
 }

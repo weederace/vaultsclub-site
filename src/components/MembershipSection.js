@@ -45,7 +45,7 @@ const benefits = [
 
 export default function MembershipSection() {
   return (
-    <section className="relative w-full text-white py-12 sm:py-16 overflow-hidden">
+    <section className="relative w-full text-white py-12 sm:py-16 overflow-hidden mb-16 sm:mb-24">
       {/* بک‌گراند موبایل */}
       <div
         className="absolute inset-0 bg-cover bg-center sm:hidden"
