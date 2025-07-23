@@ -32,7 +32,7 @@ function ShrinkCardSection() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden snap-start mb-16 sm:mb-24"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden snap-start"
     >
       {/* بک‌گراند موبایل */}
       <div

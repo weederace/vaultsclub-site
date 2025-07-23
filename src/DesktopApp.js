@@ -7,7 +7,6 @@ import ShrinkCardSection from "./components/ShrinkCardSection";
 import "./index.css";
 import "./responsive.css";
 
-// --- تنظیمات نمودار توکنومیکس ---
 const chartOptions = {
   tooltip: {
     trigger: "item",
@@ -29,10 +28,10 @@ const chartOptions = {
         fontSize: 14,
         formatter: (params) => `{color${params.dataIndex}|${params.percent}%}`,
         rich: {
-          color0: { color: "#FFD600" },  // زرد
-          color1: { color: "#9E6EFF" },  // بنفش
-          color2: { color: "#38BDF8" },  // آبی
-          color3: { color: "#F472B6" },  // صورتی
+          color0: { color: "#FFD600" },
+          color1: { color: "#9E6EFF" },
+          color2: { color: "#38BDF8" },
+          color3: { color: "#F472B6" },
         },
       },
       labelLine: {
@@ -67,7 +66,6 @@ function App() {
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const navbarY = useTransform(scrollYProgress, [0, 0.3], [0, -80]);
 
-  // --- اسکرول سکشن به سکشن ---
   useEffect(() => {
     let positions = [];
     let ticking = false;
@@ -81,33 +79,32 @@ function App() {
     window.addEventListener("resize", updatePositions);
 
     const handleScroll = (event) => {
-  event.preventDefault();
-  if (ticking) return;
-  ticking = true;
+      event.preventDefault();
+      if (ticking) return;
+      ticking = true;
 
-  const scrollThreshold = 40; // اگر اسکرول کمتر از 40px بود، حرکت نکند
-  if (Math.abs(event.deltaY) < scrollThreshold) {
-    ticking = false;
-    return;
-  }
+      const scrollThreshold = 40;
+      if (Math.abs(event.deltaY) < scrollThreshold) {
+        ticking = false;
+        return;
+      }
 
-  const adjustment = event.deltaY < 0 ? -20 : 0; // پرش کمتر
-  const currentScroll = window.scrollY + 10 + adjustment;
+      const adjustment = event.deltaY < 0 ? -20 : 0;
+      const currentScroll = window.scrollY + 10 + adjustment;
 
-  const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
-  const direction = event.deltaY > 0 ? 1 : -1;
+      const currentIndex = positions.findLastIndex((pos) => pos <= currentScroll);
+      const direction = event.deltaY > 0 ? 1 : -1;
 
-  let targetIndex = currentIndex + direction;
-  if (targetIndex < 0) targetIndex = 0;
-  if (targetIndex >= positions.length) targetIndex = positions.length - 1;
+      let targetIndex = currentIndex + direction;
+      if (targetIndex < 0) targetIndex = 0;
+      if (targetIndex >= positions.length) targetIndex = positions.length - 1;
 
-  window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
+      window.scrollTo({ top: positions[targetIndex], behavior: "smooth" });
 
-  setTimeout(() => {
-    ticking = false;
-  }, 600); // کمی بیشتر تا اسکرول دوم اتفاق نیفته
-};
-
+      setTimeout(() => {
+        ticking = false;
+      }, 600);
+    };
 
     window.addEventListener("wheel", handleScroll, { passive: false });
     return () => {
@@ -184,7 +181,7 @@ function App() {
       <motion.section
         ref={heroRef}
         style={{ opacity: heroOpacity }}
-        className="h-[100svh] w-full flex flex-col justify-center items-end pt-24 pr-4 sm:pr-6 md:pr-20 text-left relative hero-section"
+        className="h-[100svh] w-full flex flex-col justify-center items-end pt-24 pr-4 sm:pr-6 md:pr-20 text-left relative hero-section m-0"
       >
         <div
           className="absolute inset-0 z-[-1]"
@@ -207,18 +204,17 @@ function App() {
       </motion.section>
 
       {/* Membership */}
-      <section id="membership" className="min-h-screen">
+      <section id="membership" className="min-h-screen m-0">
         <MembershipSection />
       </section>
 
       {/* Shrink Card */}
-      <section id="shrink-card" className="min-h-screen">
+      <section id="shrink-card" className="min-h-screen m-0">
         <ShrinkCardSection />
       </section>
 
       {/* --- Tokenomics --- */}
-      <section className="relative min-h-screen flex items-end justify-end px-4 sm:px-6 overflow-hidden tokenomics-section">
-        {/* ویدیو بکگراند */}
+      <section className="relative min-h-screen flex items-end justify-end px-4 sm:px-6 overflow-hidden tokenomics-section m-0">
         <video
           className="absolute inset-0 w-full h-full object-cover z-[-2]"
           src="/videos/tokenomics_bg.mp4"
@@ -228,15 +224,12 @@ function App() {
           playsInline
         />
 
-        {/* هاله مشکی پشت نمودار */}
         <div className="absolute top-[8%] right-[5%] w-[420px] h-[360px] bg-black/70 px-4 py-4 rounded-xl shadow-lg z-0"></div>
 
-        {/* چارت */}
         <div className="absolute top-[9%] right-[6.3%] w-[380px] h-[380px] z-10">
           <ReactECharts option={chartOptions} style={{ height: "100%", width: "100%" }} />
         </div>
 
-        {/* متن درصدها */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -252,20 +245,13 @@ function App() {
         </motion.div>
       </section>
 
-      {/* Highlights */}
-      <section className="highlights-section min-h-screen flex flex-col justify-center items-center text-sm text-gray-400 text-center bg-dark px-6">
-        <p>✅ Snapshot-based yield distribution to holders</p>
-        <p>📈 The longer you hold, the more you earn</p>
-        <p>🔍 Full transparency on the blockchain</p>
-      </section>
-
       {/* Roadmap */}
-      <section id="roadmap" className="roadmap-section min-h-screen flex justify-center items-center bg-dark px-6 py-20">
+      <section id="roadmap" className="roadmap-section min-h-screen flex justify-center items-center bg-dark px-6 m-0">
         <Roadmap />
       </section>
 
       {/* Blog */}
-      <section id="blog" className="blog-section min-h-screen flex justify-center items-center bg-dark px-6">
+      <section id="blog" className="blog-section min-h-screen flex justify-center items-center bg-dark px-6 m-0">
         <h2 className="text-4xl font-bold text-yellow-400">Blog Coming Soon...</h2>
       </section>
     </div>
