@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -71,20 +72,27 @@ const steps = [
 
 export default function Roadmap() {
   return (
-    <section
-      className="relative w-screen flex justify-center items-center aspect-[16/9]"
-      style={{
-        backgroundColor: "#003366",
-        backgroundImage: "url('/images/roadmap_bg.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="w-full max-w-6xl mx-auto relative z-10">
+    <section className="relative w-screen flex justify-center items-center py-20">
+      {/* بکگراند موبایل */}
+      <div
+        className="absolute inset-0 bg-cover bg-center sm:hidden"
+        style={{ backgroundImage: "url('/images/mobileroadmap.png')" }}
+      ></div>
+
+      {/* بکگراند دسکتاپ */}
+      <div
+        className="absolute inset-0 bg-cover bg-center hidden sm:block"
+        style={{ backgroundImage: "url('/images/roadmap_bg.png')" }}
+      ></div>
+
+      {/* نسخه دسکتاپ */}
+      <div className="w-full max-w-6xl mx-auto relative z-10 hidden sm:block">
         {steps.map((step, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className={`relative flex items-center gap-6 mb-12 ${
               index % 2 === 0 ? "justify-start" : "justify-end"
             }`}
@@ -98,9 +106,7 @@ export default function Roadmap() {
                 </div>
                 <div className="bg-white/30 backdrop-blur-md shadow-lg rounded-xl px-6 py-5 w-1/2 flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-800">
-                      {step.title}
-                    </h3>
+                    <h3 className="text-lg font-bold text-gray-800">{step.title}</h3>
                     <p className="text-gray-600 text-sm mt-1">{step.desc}</p>
                   </div>
                   <div className="ml-4 text-2xl text-gray-500">{step.icon}</div>
@@ -110,9 +116,7 @@ export default function Roadmap() {
               <>
                 <div className="bg-white/30 backdrop-blur-md shadow-lg rounded-xl px-6 py-5 w-1/2 flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-800">
-                      {step.title}
-                    </h3>
+                    <h3 className="text-lg font-bold text-gray-800">{step.title}</h3>
                     <p className="text-gray-600 text-sm mt-1">{step.desc}</p>
                   </div>
                   <div className="ml-4 text-2xl text-gray-500">{step.icon}</div>
@@ -124,7 +128,31 @@ export default function Roadmap() {
                 </div>
               </>
             )}
-          </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* نسخه موبایل */}
+      <div className="w-full px-4 mx-auto relative z-10 sm:hidden">
+        {steps.map((step, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="bg-white/20 backdrop-blur-md rounded-xl p-4 shadow-lg mb-6 flex items-center gap-4"
+          >
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${step.color}`}
+            >
+              {step.number}
+            </div>
+            <div className="flex-1 text-left">
+              <h3 className="text-base font-bold text-gray-100">{step.title}</h3>
+              <p className="text-gray-200 text-sm">{step.desc}</p>
+            </div>
+            <div className="text-gray-200">{step.icon}</div>
+          </motion.div>
         ))}
       </div>
     </section>
