@@ -103,22 +103,22 @@ function MobileApp() {
       </section>
 
       {/* --- Membership Section --- */}
-      <section id="membership" className="py-12 sm:py-16">
+      <section id="membership" className="py-0 sm:py-0">
         <MembershipSection />
       </section>
 
       {/* --- Shrink Card Section --- */}
-      <section id="shrink-card" className="py-12 sm:py-16">
+      <section id="shrink-card" className="py-0 sm:py-0">
         <ShrinkCardSection />
       </section>
 
       {/* --- Roadmap Section --- */}
-      <section id="roadmap" className="py-12 sm:py-16">
+      <section id="roadmap" className="py-0 sm:py-0">
         <Roadmap />
       </section>
 
       {/* --- Blog Section --- */}
-      <section id="blog" className="py-16 text-center">
+      <section id="blog" className="py-0 text-center">
         <h2 className="text-yellow-400 text-2xl font-bold mb-4">
           Blog Coming Soon...
         </h2>
